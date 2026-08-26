@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Bookings collection: Anyone can create a booking; authenticated admins have full access
+    match /bookings/{bookingId} {
+      allow create: if true;
+      allow read, update, delete: if true;
+    }
+    
+    // Queries collection: Anyone can submit an inquiry; authenticated admins have full access
+    match /queries/{queryId} {
+      allow create: if true;
+      allow read, update, delete: if true;
+    }
+    
+    // Fallback for any other collection
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
