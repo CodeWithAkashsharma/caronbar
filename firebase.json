@@ -47,6 +47,23 @@
         ]
       }
     ],
+    "redirects": [
+      {
+        "source": "/f/fast-fresh-quick-car-care-tips",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/f/**",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/fast-fresh-quick-car-care-tips",
+        "destination": "/",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "**",

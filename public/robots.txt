@@ -4,7 +4,6 @@ Disallow: /admin
 Disallow: /caronbar/admin
 Disallow: /dashboard
 Disallow: /t/
-Disallow: /faq
 
 # Sitemaps
 Sitemap: https://www.caronbar.com/sitemap.xml
