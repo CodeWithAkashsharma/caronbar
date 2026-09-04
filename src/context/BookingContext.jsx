@@ -142,15 +142,19 @@ export const BookingProvider = ({ children }) => {
     const vehicle = VEHICLE_TYPES.find(v => v.id === vehId) || VEHICLE_TYPES[0];
     
     let basePrice = 0;
+    let baseVehiclePrice = 0;
     const item = customDraft.itemType === 'package'
       ? PACKAGES_DATA.find(p => p.id === customDraft.selectedItemId)
       : SERVICES_DATA.find(s => s.id === customDraft.selectedItemId || s.slug === customDraft.selectedItemId);
     
     if (item) {
       basePrice = item.basePrice || 0;
+      if (item.prices) {
+        baseVehiclePrice = item.prices[vehId] ?? item.prices['hatchback-sedan'] ?? item.prices['hatchback'] ?? Math.round(basePrice * (vehicle ? vehicle.multiplier : 1.0));
+      } else {
+        baseVehiclePrice = Math.round(basePrice * (vehicle ? vehicle.multiplier : 1.0));
+      }
     }
-
-    const baseVehiclePrice = Math.round(basePrice * (vehicle ? vehicle.multiplier : 1.0));
 
     const addonsTotal = (customDraft.selectedAddons || []).reduce((sum, addonId) => {
       const addonObj = ADDONS_DATA.find(a => a.id === addonId);
@@ -360,3 +364,6 @@ export const useBooking = () => {
   }
   return context;
 };
+
+
+

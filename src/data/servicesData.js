@@ -22,6 +22,13 @@ export const SERVICES_DATA = [
     ],
     image: '/carousel/slide1_creta_foam.webp',
     video: '/videos/car_foam_video.mp4',
+    prices: {
+      'hatchback-sedan': 499,
+      hatchback: 499,
+      sedan: 599,
+      suv: 699,
+      '2wheeler': 299
+    },
     features: [
       'High-pressure soft water wash',
       'Thick pH-neutral snow foam',
@@ -52,6 +59,13 @@ export const SERVICES_DATA = [
     ],
     image: '/carousel/slide4_wheel_blast.webp',
     video: '/videos/two_wheeler_video.mp4',
+    prices: {
+      'hatchback-sedan': 699,
+      hatchback: 699,
+      sedan: 799,
+      suv: 899,
+      '2wheeler': 399
+    },
     features: [
       'Heavy underbody high-pressure wash',
       'Wheel arch mud & grit removal',
@@ -82,6 +96,13 @@ export const SERVICES_DATA = [
     ],
     image: '/services/interior_steam_service.webp',
     video: '/videos/car_foam_video.mp4',
+    prices: {
+      'hatchback-sedan': 699,
+      hatchback: 699,
+      sedan: 799,
+      suv: 899,
+      '2wheeler': 399
+    },
     features: [
       'Full seat & floor deep vacuum',
       '160°C hot steam stain removal',
@@ -112,6 +133,13 @@ export const SERVICES_DATA = [
     ],
     image: '/carousel/slide3_audi_detail.webp',
     video: '/videos/two_wheeler_video.mp4',
+    prices: {
+      'hatchback-sedan': 999,
+      hatchback: 999,
+      sedan: 1199,
+      suv: 1299,
+      '2wheeler': 599
+    },
     features: [
       'Full exterior snow foam wash',
       'Deep interior steam & vacuum',

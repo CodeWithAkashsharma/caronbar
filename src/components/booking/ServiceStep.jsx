@@ -101,50 +101,51 @@ export const ServiceStep = ({ onNext }) => {
       {/* 3. Services / Packages Grid */}
       {activeTab === 'service' && !is2Wheeler ? (
         /* Standard Car Daily Treatments (6 Cards) */
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
           {SERVICES_DATA.map((service) => {
             const isSelected = draftBooking.itemType === 'service' && (draftBooking.selectedItemId === service.id || draftBooking.selectedItemId === service.slug);
-            const calculatedPrice = Math.round(service.basePrice * currentVehicle.multiplier);
-            const originalPrice = Math.round((service.originalBasePrice || service.basePrice * 1.3) * currentVehicle.multiplier);
-            const percentOff = Math.round(((originalPrice - calculatedPrice) / originalPrice) * 100);
+            const calculatedPrice = (service.prices && (service.prices[currentVehicle.id] ?? service.prices['hatchback-sedan'])) ?? Math.round(service.basePrice * (currentVehicle?.multiplier || 1));
+            const ratio = (service.originalBasePrice && service.basePrice) ? (service.originalBasePrice / service.basePrice) : 1.35;
+            const originalPrice = Math.max(Math.round(calculatedPrice * Math.max(ratio, 1.35)), calculatedPrice + 150);
+            const percentOff = Math.max(5, Math.round(((originalPrice - calculatedPrice) / originalPrice) * 100));
 
             return (
               <div
                 key={service.id}
                 onClick={() => handleSelectService(service.slug || service.id)}
-                className={`p-2.5 min-[360px]:p-3.5 sm:p-4 rounded-xl sm:rounded-2xl cursor-pointer border transition-all duration-300 relative group overflow-hidden ${isSelected
-                    ? 'bg-rose-50/80 border-2 border-[#8B182B] shadow-md ring-2 ring-[#8B182B]/20'
-                    : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
+                className={`p-2 min-[360px]:p-2.5 sm:p-3 rounded-xl sm:rounded-2xl cursor-pointer border transition-all duration-300 relative group overflow-hidden ${isSelected
+                    ? 'bg-rose-50/80 border-2 border-[#8B182B] shadow-sm ring-1 ring-[#8B182B]/20'
+                    : 'bg-white border-slate-200 hover:border-slate-300 shadow-xs'
                   }`}
               >
-                <div className="flex items-start gap-2.5 sm:gap-4">
+                <div className="flex items-start gap-2 sm:gap-3">
                   <img
                     src={service.image}
                     alt={service.name}
-                    className="w-14 h-14 min-[360px]:w-16 min-[360px]:h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl object-cover border border-slate-200 shrink-0"
+                    className="w-12 h-12 min-[360px]:w-14 min-[360px]:h-14 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl object-cover border border-slate-200 shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1 mb-0.5 sm:mb-1">
-                      <h4 className="font-display font-black italic text-xs min-[360px]:text-sm sm:text-base text-slate-950 uppercase truncate leading-tight">
+                    <div className="flex items-center justify-between gap-1 mb-0.5">
+                      <h4 className="font-display font-black italic text-xs min-[360px]:text-sm text-slate-950 uppercase truncate leading-tight">
                         {service.name}
                       </h4>
                     </div>
-                    <p className="font-sans text-[9px] min-[360px]:text-xs text-slate-800 font-medium line-clamp-2 mb-1.5 sm:mb-2 leading-tight sm:leading-relaxed">
+                    <p className="font-sans text-[8.5px] min-[360px]:text-[9.5px] sm:text-xs text-slate-700 font-medium line-clamp-2 mb-1 leading-tight sm:leading-snug">
                       {service.shortDescription}
                     </p>
 
-                    <div className="flex items-center justify-between pt-1.5 sm:pt-2 border-t border-slate-200/80 gap-1">
-                      <span className="text-[9px] min-[360px]:text-xs text-slate-700 font-semibold flex items-center gap-0.5 sm:gap-1 font-sans shrink-0">
-                        <Clock className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-[#8B182B] shrink-0" /> {service.duration ? service.duration.replace(/hours?/gi, 'hr').replace(/minutes?|mins?/gi, 'min') : ''}
+                    <div className="flex items-center justify-between pt-1 border-t border-slate-200/80 gap-1">
+                      <span className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-600 font-semibold flex items-center gap-0.5 font-sans shrink-0">
+                        <Clock className="w-2.5 h-2.5 text-[#8B182B] shrink-0" /> {service.duration ? service.duration.replace(/hours?/gi, 'hr').replace(/minutes?|mins?/gi, 'min') : ''}
                       </span>
                       <div className="flex items-baseline justify-end gap-1 shrink-0">
                         <span className="text-xs min-[360px]:text-sm sm:text-base font-black font-mono text-[#8B182B]">
                           {formatCurrency(calculatedPrice)}
                         </span>
-                        <span className="text-[8.5px] min-[360px]:text-[10px] text-slate-400 font-mono line-through font-medium">
+                        <span className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-400 font-mono line-through font-medium">
                           {formatCurrency(originalPrice)}
                         </span>
-                        <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[7.5px] min-[360px]:text-[9px] font-bold font-mono px-1 sm:px-1.5 py-0.2 sm:py-0.5 rounded-full uppercase shrink-0">
+                        <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[6.5px] min-[360px]:text-[7.5px] sm:text-[8.5px] font-bold font-mono px-1 py-0.2 rounded-full uppercase shrink-0">
                           {percentOff}% OFF
                         </span>
                       </div>
@@ -153,8 +154,8 @@ export const ServiceStep = ({ onNext }) => {
                 </div>
 
                 {isSelected && (
-                  <div className="absolute top-2 right-2 sm:top-3 sm:right-3 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#8B182B] text-white flex items-center justify-center shadow-md">
-                    <Check className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 stroke-[3]" />
+                  <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 w-4 h-4 rounded-full bg-[#8B182B] text-white flex items-center justify-center shadow-xs">
+                    <Check className="w-2.5 h-2.5 stroke-[3]" />
                   </div>
                 )}
               </div>
@@ -162,57 +163,64 @@ export const ServiceStep = ({ onNext }) => {
           })}
         </div>
       ) : (
-        /* Monthly Packages Grid: 1-Column centered for 2-Wheeler (₹399), 2-Column on Mobile, 4-Column on Desktop for Cars */
-        <div className={`grid ${is2Wheeler ? 'grid-cols-1 max-w-xl mx-auto' : 'grid-cols-2 lg:grid-cols-4'} gap-1.5 min-[360px]:gap-2.5 sm:gap-4`}>
+        /* Monthly Packages Grid: 1-Column centered for 2-Wheeler (₹399), 2-Column on Mobile, 3-Column on Desktop for Cars */
+        <div className="flex flex-wrap justify-center items-stretch gap-2 sm:gap-3">
           {monthlyList.map((pkg) => {
             const isSelected = draftBooking.itemType === 'package' && draftBooking.selectedItemId === pkg.id;
-            const calculatedPrice = (pkg.prices && pkg.prices[currentVehicle.id]) || Math.round(pkg.basePrice * currentVehicle.multiplier);
-            const originalPrice = Math.round((pkg.originalBasePrice || pkg.basePrice * 1.25) * currentVehicle.multiplier);
-            const percentOff = Math.round(((originalPrice - calculatedPrice) / originalPrice) * 100);
+            const calculatedPrice = (pkg.prices && (pkg.prices[currentVehicle.id] ?? pkg.prices['hatchback-sedan'] ?? pkg.prices['hatchback'])) ?? Math.round(pkg.basePrice * (currentVehicle?.multiplier || 1));
+            const ratio = (pkg.originalBasePrice && pkg.basePrice) ? (pkg.originalBasePrice / pkg.basePrice) : 1.35;
+            const originalPrice = Math.max(Math.round(calculatedPrice * Math.max(ratio, 1.35)), calculatedPrice + 150);
+            const percentOff = Math.max(5, Math.round(((originalPrice - calculatedPrice) / originalPrice) * 100));
 
             return (
               <div
                 key={pkg.id}
                 onClick={() => handleSelectPackage(pkg.id)}
-                className={`p-2 min-[360px]:p-2.5 sm:p-5 rounded-xl sm:rounded-2xl cursor-pointer border transition-all duration-300 flex flex-col justify-between relative ${
+                className={`w-full ${
+                  is2Wheeler
+                    ? 'max-w-md'
+                    : monthlyList.length === 2
+                    ? 'sm:w-[calc(50%-0.5rem)] max-w-sm'
+                    : 'sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.5rem)] max-w-sm'
+                } p-2 min-[360px]:p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl cursor-pointer border transition-all duration-300 flex flex-col justify-between relative ${
                   isSelected
-                    ? 'bg-rose-50/70 border-2 border-[#8B182B] shadow-md scale-[1.01]'
-                    : 'bg-white border border-slate-200 hover:border-slate-300 shadow-sm'
+                    ? 'bg-rose-50/70 border-2 border-[#8B182B] shadow-sm scale-[1.01]'
+                    : 'bg-white border border-slate-200 hover:border-slate-300 shadow-xs'
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between gap-1 mb-0.5 sm:mb-1">
-                    <h4 className="font-display font-black italic text-[10.5px] min-[360px]:text-xs sm:text-lg text-[#8B182B] uppercase truncate">
+                  <div className="flex items-center justify-between gap-1 mb-0.5">
+                    <h4 className="font-display font-black italic text-[10px] min-[360px]:text-xs sm:text-sm text-[#8B182B] uppercase truncate">
                       {pkg.name}
                     </h4>
                     {pkg.badge && (
-                      <span className="text-[6.5px] min-[360px]:text-[7.5px] sm:text-[9.5px] font-mono font-bold bg-[#8B182B]/10 text-[#8B182B] px-1 py-0.2 sm:px-1.5 sm:py-0.5 rounded-full uppercase shrink-0">
+                      <span className="text-[6.5px] min-[360px]:text-[7.5px] sm:text-[8.5px] font-mono font-bold bg-[#8B182B]/10 text-[#8B182B] px-1 py-0.2 rounded-full uppercase shrink-0">
                         {pkg.badge}
                       </span>
                     )}
                   </div>
-                  <p className="font-sans text-[7.5px] min-[360px]:text-[8.5px] sm:text-xs text-slate-800 font-medium leading-tight sm:leading-relaxed mb-1 sm:mb-3 line-clamp-2">
+                  <p className="font-sans text-[7.5px] min-[360px]:text-[8.5px] sm:text-xs text-slate-700 font-medium leading-tight sm:leading-snug mb-1 sm:mb-2 line-clamp-2">
                     {pkg.tagline}
                   </p>
 
-                  <div className="mb-1 sm:mb-3.5 p-1 min-[360px]:p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-slate-50 border border-slate-200 flex flex-col min-[380px]:flex-row items-start min-[380px]:items-center justify-between gap-0.5">
-                    <div className="flex items-baseline gap-1 sm:gap-2">
-                      <span className="text-xs min-[360px]:text-sm sm:text-xl font-black font-mono text-[#8B182B]">
+                  <div className="mb-1 sm:mb-2 p-1 min-[360px]:p-1.5 sm:p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between gap-1 flex-nowrap">
+                    <div className="flex items-baseline gap-1 sm:gap-1.5 shrink-0">
+                      <span className="text-xs min-[360px]:text-sm sm:text-base font-black font-mono text-[#8B182B]">
                         {formatCurrency(calculatedPrice)}
                       </span>
-                      <span className="text-[7.5px] min-[360px]:text-[8.5px] sm:text-xs text-slate-400 font-mono line-through font-medium">
+                      <span className="text-[7.5px] min-[360px]:text-[8.5px] sm:text-[10px] text-slate-400 font-mono line-through font-medium">
                         {formatCurrency(originalPrice)}
                       </span>
                     </div>
-                    <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[6.5px] min-[360px]:text-[7.5px] sm:text-[10px] font-bold font-mono px-1 py-0.2 rounded-full uppercase shrink-0">
+                    <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[6.5px] min-[360px]:text-[7.5px] sm:text-[8.5px] font-bold font-mono px-1 py-0.2 rounded-full uppercase shrink-0 whitespace-nowrap">
                       {percentOff}% OFF
                     </span>
                   </div>
 
-                  <ul className="space-y-0.5 sm:space-y-2 mb-1.5 sm:mb-6 text-[7.5px] min-[360px]:text-[8.5px] sm:text-xs">
+                  <ul className="space-y-0.5 sm:space-y-1 mb-1.5 sm:mb-3 text-[7.5px] min-[360px]:text-[8.5px] sm:text-[10.5px]">
                     {pkg.servicesIncluded.map((s, idx) => (
-                      <li key={idx} className="flex items-start gap-1 sm:gap-2 text-slate-900 font-semibold leading-tight sm:leading-normal">
-                        <Check className="w-2 h-2 sm:w-3.5 sm:h-3.5 text-[#8B182B] shrink-0 mt-0.5" />
+                      <li key={idx} className="flex items-start gap-1 sm:gap-1.5 text-slate-800 font-semibold leading-tight">
+                        <Check className="w-2 h-2 sm:w-3 sm:h-3 text-[#8B182B] shrink-0 mt-0.5" />
                         <span className="line-clamp-2 sm:line-clamp-none">{s}</span>
                       </li>
                     ))}
@@ -221,7 +229,7 @@ export const ServiceStep = ({ onNext }) => {
 
                 <button
                   type="button"
-                  className={`w-full py-1 min-[360px]:py-1.5 sm:py-2.5 rounded-md sm:rounded-xl text-[8px] min-[360px]:text-[9px] sm:text-xs font-black uppercase tracking-wider transition-colors cursor-pointer ${
+                  className={`w-full py-1 min-[360px]:py-1.5 sm:py-2 rounded-md sm:rounded-lg text-[8px] min-[360px]:text-[9px] sm:text-xs font-black uppercase tracking-wider transition-colors cursor-pointer ${
                     isSelected ? 'burgundy-btn' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >

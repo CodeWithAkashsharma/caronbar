@@ -57,6 +57,7 @@ export const FAQ = () => {
       <SEOHead
         title="FAQ | Knowledge Base"
         description="Frequently asked questions regarding doorstep car wash setup, ceramic coating warranties, and booking procedures."
+        noindex={true}
       />
 
       <div className="pt-28 pb-20 bg-[#F8FAFC] min-h-screen text-slate-800">

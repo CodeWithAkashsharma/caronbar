@@ -17,9 +17,13 @@ export const SEOHead = ({
   keywords,
   canonicalPath = '',
   ogImage = '/logo.png',
-  ogType = 'website'
+  ogType = 'website',
+  noindex = false
 }) => {
   useEffect(() => {
+    // 0. Robots Meta Tag (Index / Noindex)
+    setMetaTag('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
+
     // 1. Page Title
     const formattedTitle = title
       ? title.includes('CARONBAR') ? title : `${title} | CARONBAR Car Wash`
@@ -62,7 +66,7 @@ export const SEOHead = ({
     }
     canonicalTag.setAttribute('href', fullUrl);
 
-  }, [title, description, keywords, canonicalPath, ogImage, ogType]);
+  }, [title, description, keywords, canonicalPath, ogImage, ogType, noindex]);
 
   return null;
 };

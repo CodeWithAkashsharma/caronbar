@@ -211,7 +211,11 @@ export const PaymentStep = ({ onPrev }) => {
 
   const handleMainAction = () => {
     if (paymentMethod === 'razorpay') {
-      handleRazorpayPayment();
+      if (!hasRealKey) {
+        setShowTestSimulatorModal(true);
+      } else {
+        handleRazorpayPayment();
+      }
     } else {
       handleCashBooking();
     }

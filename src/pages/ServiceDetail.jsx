@@ -73,7 +73,7 @@ export const ServiceDetail = () => {
                     Base Investment for {currentVehicle.name.split('/')[0]}:
                   </span>
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#8B182B]">
-                    {formatCurrency(Math.round(service.basePrice * currentVehicle.multiplier))}
+                    {formatCurrency((service.prices && (service.prices[currentVehicle.id] ?? service.prices['hatchback-sedan'])) ?? Math.round(service.basePrice * (currentVehicle?.multiplier || 1)))}
                   </span>
                 </div>
                 <button
@@ -121,7 +121,7 @@ export const ServiceDetail = () => {
 
               <div className="space-y-2 pt-1 sm:pt-2">
                 {VEHICLE_TYPES.map((v) => {
-                  const calculated = Math.round(service.basePrice * v.multiplier);
+                  const calculated = (service.prices && (service.prices[v.id] ?? service.prices['hatchback-sedan'])) ?? Math.round(service.basePrice * v.multiplier);
                   const isCurrent = currentVehicle.id === v.id;
 
                   return (

@@ -19,7 +19,7 @@ export const Footer = () => {
                 <img src="/logo-transparent.png" alt="CarOnBar Logo" className="h-9 sm:h-16 w-auto object-contain drop-shadow-[0_0_15px_rgba(139,24,43,0.35)]" />
                 <div className="flex flex-col">
                   <span className="font-display font-black text-base sm:text-2xl italic tracking-wider uppercase text-white">
-                    Car<span className="text-[#8B182B]">OnBar</span>
+                    CAR<span className="text-[#8B182B]">ON</span>BAR
                   </span>
                   <span className="text-[8px] sm:text-[9px] font-mono text-slate-400 uppercase tracking-widest -mt-0.5 font-bold">
                     DOORSTEP CAR & BIKE WASH
@@ -27,7 +27,7 @@ export const Footer = () => {
                 </div>
               </Link>
               <p className="text-xs text-slate-400 leading-relaxed max-w-sm hidden sm:block">
-                Daily Car & Bike Wash at Your Doorstep across Janakpuri & Delhi NCR. Founded by Naresh Gaur. Starting from ₹399/month.
+                Daily Car & Bike Wash at Your Doorstep across Janakpuri & Delhi NCR. Founded by Naresh Gaur. Starting from ₹499/month.
               </p>
             </div>
 

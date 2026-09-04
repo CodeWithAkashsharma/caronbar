@@ -178,48 +178,52 @@ export const Services = () => {
             </div>
           ) : (
             /* STANDARD 4-WHEELER CAR SERVICES GRID */
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 max-w-6xl mx-auto items-stretch">
               {SERVICES_DATA.map((service) => {
-                const calculatedPrice = Math.round(service.basePrice * currentVehicle.multiplier);
-                const originalPrice = Math.round((service.originalBasePrice || service.basePrice * 1.3) * currentVehicle.multiplier);
+                const calculatedPrice = (service.prices && (service.prices[currentVehicle.id] ?? service.prices['hatchback-sedan'])) ?? Math.round(service.basePrice * (currentVehicle?.multiplier || 1));
+                const ratio = (service.originalBasePrice && service.basePrice) ? (service.originalBasePrice / service.basePrice) : 1.35;
+                const originalPrice = Math.max(Math.round(calculatedPrice * Math.max(ratio, 1.35)), calculatedPrice + 150);
+                const percentOff = Math.max(5, Math.round(((originalPrice - calculatedPrice) / originalPrice) * 100));
 
                 return (
                   <div
                     key={service.id}
-                    className="bg-white border border-slate-200/90 rounded-xl sm:rounded-2xl p-2.5 min-[360px]:p-3.5 sm:p-6 flex flex-col justify-between group hover:border-slate-300 hover:shadow-lg transition-all duration-300 shadow-xs sm:shadow-sm"
+                    className="bg-white border border-slate-200 hover:border-[#8B182B] rounded-xl sm:rounded-2xl p-2.5 min-[360px]:p-3.5 sm:p-4 flex flex-col justify-between group hover:shadow-lg transition-all duration-300 shadow-xs relative h-full"
                   >
-                    <div className="space-y-2 sm:space-y-4">
+                    <div className="space-y-2 sm:space-y-3 flex-1 flex flex-col">
                       {/* Media Card Preview */}
-                      <div className="relative">
+                      <div className="relative rounded-lg sm:rounded-xl overflow-hidden">
                         <VideoCardMedia
                           image={service.image}
                           video={service.video}
                           alt={service.name}
-                          className="h-28 min-[360px]:h-36 sm:h-52 rounded-lg sm:rounded-xl shadow-inner object-cover"
+                          className="h-28 min-[360px]:h-32 sm:h-36 w-full rounded-lg sm:rounded-xl shadow-inner object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
 
                       <div>
-                        <div className="flex items-center justify-between gap-1 mb-1 sm:mb-2">
-                          <span className="inline-flex items-center gap-0.5 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg bg-rose-50 border border-rose-200/90 text-[#8B182B] text-[8px] sm:text-xs font-mono font-bold shadow-xs whitespace-nowrap">
+                        <div className="flex items-center justify-between gap-1 mb-1">
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-rose-50 border border-rose-200/90 text-[#8B182B] text-[8.5px] sm:text-[10.5px] font-mono font-bold shadow-xs whitespace-nowrap">
                             <span>⏱️ {service.duration.replace(/hours?/gi, 'hr').replace(/minutes?|mins?/gi, 'min')}</span>
                           </span>
+                          <span className="text-[8.5px] sm:text-[10.5px] font-mono font-bold uppercase text-slate-400">
+                            {currentVehicle.name.split('/')[0].split('(')[0].trim()}
+                          </span>
                         </div>
-                        <h3 className="font-display font-black text-[9.5px] min-[360px]:text-[11px] sm:text-lg text-slate-900 group-hover:text-[#8B182B] transition-colors leading-tight sm:leading-snug">
-                          <span className="sm:hidden">{service.name.replace(/^Car\s+/i, '')}</span>
-                          <span className="hidden sm:inline">{service.name}</span>
+                        <h3 className="font-display font-black text-xs min-[360px]:text-sm sm:text-base text-slate-900 group-hover:text-[#8B182B] transition-colors leading-tight sm:leading-snug">
+                          {service.name}
                         </h3>
-                        <p className="font-sans text-[8.5px] min-[360px]:text-[9.5px] sm:text-xs text-slate-600 mt-0.5 sm:mt-1 leading-tight sm:leading-relaxed line-clamp-1 sm:line-clamp-none">
+                        <p className="font-sans text-[8.5px] min-[360px]:text-[9.5px] sm:text-xs text-slate-600 mt-0.5 leading-tight sm:leading-snug">
                           {service.shortDescription}
                         </p>
                       </div>
 
                       {/* Features Checklist */}
-                      <ul className="space-y-1 sm:space-y-2 pt-2 sm:pt-3 border-t border-slate-100 text-[9px] min-[360px]:text-[10px] sm:text-xs text-slate-700">
+                      <ul className="space-y-0.5 sm:space-y-1 pt-1.5 sm:pt-2 border-t border-slate-100 text-[8.5px] min-[360px]:text-[9.5px] sm:text-xs text-slate-700 flex-1">
                         {service.features.slice(0, 3).map((feat, idx) => (
-                          <li key={idx} className="flex items-center gap-1.5 sm:gap-2">
-                            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                              <Check className="w-2 h-2 sm:w-2.5 sm:h-2.5 stroke-[3]" />
+                          <li key={idx} className="flex items-center gap-1.5">
+                            <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                              <Check className="w-2 h-2 stroke-[3]" />
                             </div>
                             <span className="truncate">{feat}</span>
                           </li>
@@ -228,24 +232,19 @@ export const Services = () => {
                     </div>
 
                     {/* Price & Book Action */}
-                    <div className="pt-2.5 sm:pt-5 mt-2.5 sm:mt-4 border-t border-slate-100 flex flex-col min-[380px]:flex-row min-[380px]:items-center justify-between gap-1.5 sm:gap-2">
-                      <div>
-                        <div className="flex items-center gap-1 mb-0.5">
-                          <span className="text-[8px] sm:text-[10px] text-slate-500 font-mono uppercase font-medium">
-                            {currentVehicle.name.split('/')[0].split('(')[0].trim()}
-                          </span>
-                          <span className="text-[7px] sm:text-[9px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-1 py-0.2 rounded-full uppercase">
-                            OFF
-                          </span>
-                        </div>
-                        <div className="flex items-baseline gap-1 sm:gap-2">
-                          <span className="text-sm min-[360px]:text-base sm:text-2xl font-black font-mono text-slate-900">
+                    <div className="pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-100 space-y-2">
+                      <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-1">
+                        <div className="flex items-baseline gap-1.5 sm:gap-2 flex-nowrap">
+                          <span className="text-base min-[360px]:text-lg sm:text-2xl font-black font-mono text-[#8B182B] whitespace-nowrap">
                             {formatCurrency(calculatedPrice)}
                           </span>
-                          <span className="text-[8px] sm:text-xs text-slate-400 font-mono line-through">
+                          <span className="text-[9px] min-[360px]:text-[10px] sm:text-xs text-slate-400 font-mono line-through whitespace-nowrap">
                             {formatCurrency(originalPrice)}
                           </span>
                         </div>
+                        <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[7px] min-[360px]:text-[8px] sm:text-[9px] font-bold font-mono px-1.5 py-0.5 rounded-full uppercase shrink-0">
+                          {percentOff}% OFF
+                        </span>
                       </div>
 
                       <button
@@ -254,9 +253,9 @@ export const Services = () => {
                           selectServiceForBooking(service.slug || service.id);
                           navigate('/booking');
                         }}
-                        className="burgundy-btn w-full min-[380px]:w-auto px-2.5 sm:px-5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold shrink-0 shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-1 cursor-pointer mt-1 min-[380px]:mt-0"
+                        className="burgundy-btn w-full py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[9px] min-[360px]:text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-1 cursor-pointer"
                       >
-                        <span>BOOK</span>
+                        <span>BOOK {service.name.toUpperCase()}</span>
                         <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                       </button>
                     </div>

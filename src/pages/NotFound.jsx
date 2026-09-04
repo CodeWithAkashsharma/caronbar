@@ -1,19 +1,25 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Home, ArrowLeft, ShieldAlert, Car } from 'lucide-react';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const NotFound = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-800 font-sans flex flex-col relative overflow-hidden">
+      <SEOHead
+        title="404 Page Not Found"
+        description="The requested page could not be found."
+        noindex={true}
+      />
       
       {/* TOP HEADER BAR */}
       <header className="bg-[#121720] border-b border-white/10 w-full shrink-0 z-20">
         <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 select-none hover:opacity-90 transition-opacity">
             <span className="font-display font-black text-lg sm:text-2xl italic tracking-wider uppercase text-white">
-              CAR<span className="text-[#8B182B] font-black">ONBAR</span>
+              CAR<span className="text-[#8B182B] font-black">ON</span>BAR
             </span>
           </Link>
         </div>

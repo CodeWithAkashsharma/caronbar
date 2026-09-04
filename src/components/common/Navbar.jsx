@@ -60,7 +60,7 @@ export const Navbar = () => {
           <img src="/logo-transparent.png" alt="CARONBAR Logo" className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(139,24,43,0.4)] group-hover:scale-105 transition-transform duration-300" />
           <div className="flex flex-col">
             <span className="font-display font-black text-xl sm:text-2xl italic tracking-wider uppercase text-white hidden sm:inline-block">
-              CAR<span className="text-[#8B182B] font-black">ONBAR</span>
+              CAR<span className="text-[#8B182B] font-black">ON</span>BAR
             </span>
             <span className="text-[8px] font-mono tracking-widest text-[#94A3B8] uppercase hidden sm:inline-block -mt-1 font-bold">
               DOORSTEP CAR CARE & CAR WASH
@@ -155,7 +155,7 @@ export const Navbar = () => {
               >
                 <img src="/logo-transparent.png" alt="CARONBAR Logo" className="h-9 sm:h-10 w-auto object-contain drop-shadow-[0_0_8px_rgba(139,24,43,0.3)]" />
                 <span className="font-display font-black text-lg sm:text-xl italic tracking-wider uppercase text-white">
-                  CAR<span className="text-[#8B182B] font-black">ONBAR</span>
+                  CAR<span className="text-[#8B182B] font-black">ON</span>BAR
                 </span>
               </Link>
 
@@ -239,3 +239,4 @@ export const Navbar = () => {
     </nav>
   );
 };
+

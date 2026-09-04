@@ -1,19 +1,22 @@
+// Monthly subscription plans — Hatchback & Sedan are merged into one price (₹499/month, ₹1399/3 months)
 export const MONTHLY_PACKAGES_DATA = [
   {
     id: 'monthly-1m',
     type: 'monthly',
-    name: 'Monthly',
+    name: '1 Month Care',
     tagline: '1x Full body wash + 4x internal wash',
-    basePrice: 999,
-    originalBasePrice: 1499,
+    basePrice: 499,
+    originalBasePrice: 799,
     prices: {
-      hatchback: 999,
-      sedan: 1199,
-      suv: 1499
+      'hatchback-sedan': 499,
+      hatchback: 499,
+      sedan: 499,
+      suv: 599,
+      '2wheeler': 399
     },
     period: '/ month',
     popular: true,
-    badge: 'Monthly Plan',
+    badge: '1 Month Plan',
     duration: '30 Days Care',
     servicesIncluded: [
       '1x Full body snow foam wash',
@@ -25,14 +28,16 @@ export const MONTHLY_PACKAGES_DATA = [
   {
     id: 'quarterly',
     type: 'monthly',
-    name: 'Quarterly',
+    name: '3 Months Care',
     tagline: '3 Months daily care + weekly foam wash',
-    basePrice: 1400,
-    originalBasePrice: 1799,
+    basePrice: 1399,
+    originalBasePrice: 1999,
     prices: {
-      hatchback: 1400,
-      sedan: 1700,
-      suv: 2800
+      'hatchback-sedan': 1399,
+      hatchback: 1399,
+      sedan: 1399,
+      suv: 1699,
+      '2wheeler': 999
     },
     period: '/ 3 months',
     popular: false,
@@ -44,55 +49,10 @@ export const MONTHLY_PACKAGES_DATA = [
       'Weekly high-pressure foam wash',
       'Tyre dressing & glass polish'
     ]
-  },
-  {
-    id: 'half-yearly',
-    type: 'monthly',
-    name: 'Half Yearly',
-    tagline: '6 Months care + deep interior steam clean',
-    basePrice: 2700,
-    originalBasePrice: 3499,
-    prices: {
-      hatchback: 2700,
-      sedan: 3300,
-      suv: 5500
-    },
-    period: '/ 6 months',
-    popular: false,
-    badge: 'Best Savings',
-    duration: '180 Days Care',
-    servicesIncluded: [
-      'Everything in Quarterly Plan',
-      '24x Deep interior cabin vacuums',
-      '2x Hot steam stain removals',
-      'Free machine gloss wax polish'
-    ]
-  },
-  {
-    id: 'yearly',
-    type: 'monthly',
-    name: 'Yearly',
-    tagline: '365 days full vehicle care & shine guarantee',
-    basePrice: 5500,
-    originalBasePrice: 6999,
-    prices: {
-      hatchback: 5500,
-      sedan: 6500,
-      suv: 10000
-    },
-    period: '/ year',
-    popular: false,
-    badge: 'Best Value',
-    duration: '365 Days Care',
-    servicesIncluded: [
-      'Full 365 days doorstep daily cleaning',
-      'Weekly pressure foam washes',
-      'Monthly interior steam sanitization',
-      'Machine paint polish & ceramic seal'
-    ]
   }
 ];
 
+// Daily / One-Time packages — Hatchback and Sedan are SEPARATE with distinct pricing
 export const DAILY_PACKAGES_DATA = [
   {
     id: 'complete-wash',
@@ -103,9 +63,11 @@ export const DAILY_PACKAGES_DATA = [
     basePrice: 999,
     originalBasePrice: 1499,
     prices: {
+      'hatchback-sedan': 999,
       hatchback: 999,
       sedan: 1199,
-      suv: 1499
+      suv: 1499,
+      '2wheeler': 599
     },
     period: '/ visit',
     popular: true,
@@ -127,9 +89,11 @@ export const DAILY_PACKAGES_DATA = [
     basePrice: 699,
     originalBasePrice: 999,
     prices: {
+      'hatchback-sedan': 699,
       hatchback: 699,
       sedan: 799,
-      suv: 999
+      suv: 999,
+      '2wheeler': 399
     },
     period: '/ visit',
     popular: false,
@@ -151,9 +115,11 @@ export const DAILY_PACKAGES_DATA = [
     basePrice: 499,
     originalBasePrice: 699,
     prices: {
+      'hatchback-sedan': 499,
       hatchback: 499,
       sedan: 599,
-      suv: 799
+      suv: 799,
+      '2wheeler': 299
     },
     period: '/ visit',
     popular: false,
@@ -168,6 +134,7 @@ export const DAILY_PACKAGES_DATA = [
   }
 ];
 
+// Bike-specific monthly package (shown in Monthly tab when 2-Wheeler is selected)
 export const BIKE_PACKAGES_DATA = [
   {
     id: 'bike-monthly-399',
@@ -180,7 +147,8 @@ export const BIKE_PACKAGES_DATA = [
       hatchback: 399,
       sedan: 399,
       suv: 399,
-      '2wheeler': 399
+      '2wheeler': 399,
+      'hatchback-sedan': 399
     },
     period: '/ month',
     popular: true,

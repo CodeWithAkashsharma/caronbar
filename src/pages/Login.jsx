@@ -48,7 +48,7 @@ export const Login = () => {
           <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2.5 sm:gap-3 select-none hover:opacity-90 transition-opacity">
               <span className="font-display font-black text-lg sm:text-2xl italic tracking-wider uppercase text-white">
-                CAR<span className="text-[#8B182B] font-black">ONBAR</span>
+                CAR<span className="text-[#8B182B] font-black">ON</span>BAR
               </span>
               <span className="text-[10px] sm:text-xs font-mono font-bold text-[#8B182B] bg-[#8B182B]/20 px-2 py-0.5 rounded border border-[#8B182B]/30 uppercase whitespace-nowrap">
                 ADMIN AUTHENTICATION

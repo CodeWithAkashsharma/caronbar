@@ -7,9 +7,9 @@ import { formatCurrency, formatDate } from '../../utils/formatters';
 import { Car, MapPin, Calendar, User } from 'lucide-react';
 
 export const ReviewStep = ({ onNext, onPrev }) => {
-  const { draftBooking, calculateTotal } = useBooking();
+  const { draftBooking, calculatePricingSummary } = useBooking();
 
-  const totals = calculateTotal();
+  const totals = calculatePricingSummary(draftBooking);
 
   const itemObj = draftBooking.itemType === 'package'
     ? (PACKAGES_DATA.find(p => p.id === draftBooking.selectedItemId) || PACKAGES_DATA[1])
