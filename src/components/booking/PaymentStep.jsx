@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBooking } from '../../context/BookingContext';
 import { formatCurrency } from '../../utils/formatters';
-import { CreditCard, Banknote, Sparkles, CheckCircle2, MessageCircle, X, ShieldCheck, AlertCircle, Key, Check } from 'lucide-react';
+import { CreditCard, Banknote, Sparkles, CheckCircle2, MessageCircle, X, ShieldCheck, AlertCircle, RefreshCw } from 'lucide-react';
 
 // Helper to dynamically load official Razorpay SDK
 const loadRazorpayScript = () => {
@@ -20,11 +20,27 @@ const loadRazorpayScript = () => {
   });
 };
 
+// Helper to convert CarOnBar logo to Base64 Data URL so it renders properly in Razorpay modal (including on localhost)
+const getLogoDataUrl = async () => {
+  try {
+    const res = await fetch('/favicon-180x180.png');
+    if (!res.ok) return 'https://caronbar.com/logo.png';
+    const blob = await res.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = () => resolve('https://caronbar.com/logo.png');
+      reader.readAsDataURL(blob);
+    });
+  } catch (e) {
+    return 'https://caronbar.com/logo.png';
+  }
+};
+
 export const PaymentStep = ({ onPrev }) => {
   const { draftBooking, updateDraftBooking, calculatePricingSummary, calculateTotal, submitBooking, resetDraftBooking } = useBooking();
   const [submitting, setSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showTestSimulatorModal, setShowTestSimulatorModal] = useState(false);
   const [confirmedBookingId, setConfirmedBookingId] = useState('');
   const [paymentError, setPaymentError] = useState('');
   const navigate = useNavigate();
@@ -34,7 +50,6 @@ export const PaymentStep = ({ onPrev }) => {
   
   const paymentMethod = draftBooking.paymentMethod || 'razorpay';
   const customKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
-  const hasRealKey = customKey && !customKey.includes('51e948f21bb700');
 
   const handleSelectPaymentMethod = (method) => {
     setPaymentError('');
@@ -52,12 +67,10 @@ export const PaymentStep = ({ onPrev }) => {
         orderId: orderId || ''
       });
       setSubmitting(false);
-      setShowTestSimulatorModal(false);
       setConfirmedBookingId(confirmed.id || 'GC-2026-OK');
       setShowSuccessModal(true);
     } catch (err) {
       setSubmitting(false);
-      setShowTestSimulatorModal(false);
       setPaymentError('Booking recorded with payment reference, but an error occurred saving details. Our support will contact you.');
     }
   };
@@ -80,6 +93,7 @@ export const PaymentStep = ({ onPrev }) => {
       return;
     }
 
+    const logoUrl = await getLogoDataUrl();
     const amountInPaise = Math.max(100, Math.round(currentTotal * 100));
 
     try {
@@ -118,12 +132,12 @@ export const PaymentStep = ({ onPrev }) => {
 
       // STEP 2: FRONTEND - Razorpay Standard Checkout Modal
       const options = {
-        key: customKey || 'rzp_test_TU5rjqCa0ybKOn',
+        key: customKey || 'rzp_live_TWPPp71psZVmXW',
         amount: orderAmount,
         currency: orderCurrency,
         name: 'CARONBAR',
         description: `${draftBooking.itemType === 'package' ? 'Monthly Package' : 'Doorstep Wash'} - ${draftBooking.contact.fullName || 'Valued Customer'}`,
-        image: typeof window !== 'undefined' ? `${window.location.origin}/razorpay_logo.png` : '/razorpay_logo.png',
+        image: logoUrl || '/logo.png',
         order_id: orderId || undefined,
         prefill: {
           name: draftBooking.contact.fullName || '',
@@ -211,11 +225,7 @@ export const PaymentStep = ({ onPrev }) => {
 
   const handleMainAction = () => {
     if (paymentMethod === 'razorpay') {
-      if (!hasRealKey) {
-        setShowTestSimulatorModal(true);
-      } else {
-        handleRazorpayPayment();
-      }
+      handleRazorpayPayment();
     } else {
       handleCashBooking();
     }
@@ -332,21 +342,21 @@ export const PaymentStep = ({ onPrev }) => {
                 type="button"
                 onClick={() => {
                   setPaymentError('');
-                  handleSelectPaymentMethod('cash_on_delivery');
+                  handleRazorpayPayment();
                 }}
-                className="px-2.5 py-1 rounded-md bg-white border border-red-300 text-[#8B182B] text-[10px] font-bold hover:bg-red-50 transition-colors cursor-pointer"
+                className="px-3 py-1.5 rounded-md bg-[#8B182B] text-white text-[11px] font-bold hover:bg-[#6e1322] transition-colors cursor-pointer flex items-center gap-1"
               >
-                💵 Switch to Cash on Delivery
+                <RefreshCw className="w-3 h-3" /> Retry Payment
               </button>
               <button
                 type="button"
                 onClick={() => {
                   setPaymentError('');
-                  setShowTestSimulatorModal(true);
+                  handleSelectPaymentMethod('cash');
                 }}
-                className="px-2.5 py-1 rounded-md bg-[#8B182B] text-white text-[10px] font-bold hover:bg-[#6e1322] transition-colors cursor-pointer"
+                className="px-3 py-1.5 rounded-md bg-white border border-red-300 text-[#8B182B] text-[11px] font-bold hover:bg-red-50 transition-colors cursor-pointer"
               >
-                ⚡ Test Payment Simulator
+                💵 Switch to Cash on Delivery
               </button>
             </div>
           </div>
@@ -415,72 +425,6 @@ export const PaymentStep = ({ onPrev }) => {
           ← Back to Address
         </button>
       </div>
-
-      {/* RAZORPAY TEST GATEWAY SIMULATOR MODAL (Shown when testing without client live/test key) */}
-      {showTestSimulatorModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-sm sm:max-w-md bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 text-center space-y-4 shadow-2xl">
-            
-            <button
-              onClick={() => setShowTestSimulatorModal(false)}
-              className="absolute top-3.5 right-3.5 text-slate-400 hover:text-slate-800 p-1 rounded-lg bg-slate-100 cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            <div className="w-14 h-14 rounded-full bg-rose-50 border border-rose-200 text-[#8B182B] mx-auto flex items-center justify-center shadow-sm">
-              <CreditCard className="w-7 h-7" />
-            </div>
-
-            <div className="space-y-1">
-              <span className="inline-block text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 uppercase tracking-widest">
-                Razorpay Sandbox Simulator
-              </span>
-              <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-sans">
-                Simulate Online Payment
-              </h3>
-              <p className="text-xs text-slate-600">
-                Amount: <strong className="text-[#8B182B]">{formatCurrency(currentTotal)}</strong>
-              </p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-left text-xs text-slate-600 space-y-1.5 font-sans">
-              <p className="flex items-center gap-1.5 text-slate-800 font-bold text-xs">
-                <Key className="w-3.5 h-3.5 text-[#8B182B]" /> Real Key Setup:
-              </p>
-              <p className="text-[11px] text-slate-500">
-                To open the actual Razorpay popup, add your client's API Key to <code>.env</code> file:
-              </p>
-              <code className="block bg-slate-900 text-emerald-400 px-2.5 py-1.5 rounded text-[10px] font-mono select-all">
-                VITE_RAZORPAY_KEY_ID=rzp_test_...
-              </code>
-            </div>
-
-            <div className="pt-2 space-y-2">
-              <button
-                type="button"
-                onClick={() => handlePaymentSuccess(`SIM_PAY_${Date.now()}`)}
-                className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center justify-center gap-1.5"
-              >
-                <Check className="w-4 h-4" />
-                <span>Simulate Successful Payment (₹{currentTotal})</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setShowTestSimulatorModal(false);
-                  setPaymentError('Simulated: Payment cancelled by user.');
-                }}
-                className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors cursor-pointer"
-              >
-                Simulate Cancel / Failure
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
 
       {/* POPUP MODAL: BOOKING CONFIRMED + WHATSAPP NOTIFICATION (NO DOWNLOAD INVOICE BUTTON) */}
       {showSuccessModal && (

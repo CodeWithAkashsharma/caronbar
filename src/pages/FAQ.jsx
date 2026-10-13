@@ -41,7 +41,7 @@ export const FAQ = () => {
     {
       category: 'payments',
       question: 'What payment methods do you accept?',
-      answer: 'We accept all major Credit/Debit cards via secure Razorpay sandbox integration, instant UPI QR transfers (GPay, PhonePe, Paytm), and Cash on Service / Post-Inspection payment.'
+      answer: 'We accept all major Credit/Debit cards via secure Razorpay integration, instant UPI transfers (GPay, PhonePe, Paytm, BHIM), and Cash on Service / Post-Inspection payment.'
     }
   ];
 

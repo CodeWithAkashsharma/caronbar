@@ -98,19 +98,19 @@ export const About = () => {
               </div>
             </div>
 
-            {/* MOBILE ONLY: 2-Wheeler Photo (Top Left Column on mobile) */}
+            {/* MOBILE ONLY: Home & Extra Services Showcase Photo (Top Left Column on mobile) */}
             <div className="col-span-1 lg:hidden relative group">
               <div className="relative overflow-hidden rounded-2xl border-2 border-white shadow-md bg-slate-900 aspect-[4/3] h-full">
                 <img
-                  src="/vehicles/two_wheeler_wash1.webp"
-                  alt="2-Wheeler Foam Wash Care"
+                  src="/services/extra_services_showcase.jpg"
+                  alt="Home & Extra Services Doorstep Care"
                   loading="eager"
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
                 <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-[#161D27]/90 backdrop-blur-sm text-white text-[7.5px] min-[360px]:text-[8.5px] font-mono font-bold truncate max-w-[90%] pointer-events-none">
-                  🏍️ 2-Wheeler Wash
+                  🏡 Extra Services
                 </span>
               </div>
             </div>
@@ -149,18 +149,18 @@ export const About = () => {
 
             {/* DESKTOP ONLY: Stacked Secondary Visual Cards (Right 5 cols) */}
             <div className="hidden lg:grid lg:col-span-5 grid-cols-1 gap-4">
-              {/* Secondary Visual 1: 2-Wheeler Foam Wash Photo */}
+              {/* Secondary Visual 1: Home & Extra Services Showcase Photo */}
               <div className="relative overflow-hidden rounded-3xl rounded-tl-[60px] border-4 border-white shadow-xl bg-slate-900 aspect-[16/9] group">
                 <img
-                  src="/vehicles/two_wheeler_wash1.webp"
-                  alt="2-Wheeler Foam Shampoo Wash"
+                  src="/services/extra_services_showcase.jpg"
+                  alt="Home Repairs, Cleaning & Extra Services"
                   loading="eager"
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <span className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-[#161D27]/85 backdrop-blur-sm text-white text-[10px] font-mono font-bold">
-                  🏍️ 2-Wheeler Foam Bath
+                  🏡 Home & Extra Services
                 </span>
               </div>
 

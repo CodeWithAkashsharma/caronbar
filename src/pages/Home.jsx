@@ -27,6 +27,64 @@ import {
   Clock
 } from 'lucide-react';
 
+const EXTRA_SERVICES = [
+  {
+    emoji: '🔧',
+    title: 'Home Repair & Maintenance',
+    dot: 'bg-orange-400',
+    tags: ['Gardening', 'Carpenter', 'Electrician', 'Plumber', 'AC Technician', 'Mason', 'Plastering & Interior'],
+    iconBg: 'bg-orange-500/20',
+    titleColor: 'text-orange-300',
+    rowBg: 'hover:bg-orange-500/10',
+    rowText: 'text-orange-100',
+    glow: 'hover:shadow-[0_8px_32px_rgba(249,115,22,0.12)]'
+  },
+  {
+    emoji: '🧹',
+    title: 'Home Help & Cleaning',
+    dot: 'bg-sky-400',
+    tags: ['House Help', 'Home Assistant', 'Cleaning Professional', 'Floor Sweeper', 'Housekeeper', 'Laundry Service', 'Clothes Ironing', 'Garbage Collection'],
+    iconBg: 'bg-sky-500/20',
+    titleColor: 'text-sky-300',
+    rowBg: 'hover:bg-sky-500/10',
+    rowText: 'text-sky-100',
+    glow: 'hover:shadow-[0_8px_32px_rgba(14,165,233,0.12)]'
+  },
+  {
+    emoji: '🍳',
+    title: 'Cooking & Daily Assistance',
+    dot: 'bg-emerald-400',
+    tags: ['Cook', 'Part-Time Chef', 'Office Assistant', 'General Labour', 'Home Helper'],
+    iconBg: 'bg-emerald-500/20',
+    titleColor: 'text-emerald-300',
+    rowBg: 'hover:bg-emerald-500/10',
+    rowText: 'text-emerald-100',
+    glow: 'hover:shadow-[0_8px_32px_rgba(16,185,129,0.12)]'
+  },
+  {
+    emoji: '🐾',
+    title: 'Personal & Pet Care',
+    dot: 'bg-purple-400',
+    tags: ['Patient Caregiver', 'Nursing Care', 'Personal Caretaker', 'Dog Care', 'Dog Training'],
+    iconBg: 'bg-purple-500/20',
+    titleColor: 'text-purple-300',
+    rowBg: 'hover:bg-purple-500/10',
+    rowText: 'text-purple-100',
+    glow: 'hover:shadow-[0_8px_32px_rgba(168,85,247,0.12)]'
+  },
+  {
+    emoji: '💼',
+    title: 'Professional & Advisory',
+    dot: 'bg-rose-400',
+    tags: ['Legal Consultant', 'Financial Consultant', 'Property Consultant', 'Investment Advisor'],
+    iconBg: 'bg-rose-500/20',
+    titleColor: 'text-rose-300',
+    rowBg: 'hover:bg-rose-500/10',
+    rowText: 'text-rose-100',
+    glow: 'hover:shadow-[0_8px_32px_rgba(244,63,94,0.12)]'
+  },
+];
+
 export const Home = () => {
   const { currentVehicle, selectedVehicleId, setSelectedVehicleId, updateDraftBooking, selectServiceForBooking, selectPackageForBooking } = useBooking();
   const navigate = useNavigate();
@@ -128,7 +186,7 @@ export const Home = () => {
                 <span>BOOK NOW</span>
               </Link>
               <a
-                href="https://wa.me/918750919105?text=Hello%20CarOBar,%20I%20want%20to%20book%20a%20doorstep%20wash"
+                href="https://wa.me/918750919105?text=Hello%20CarOnBar,%20I%20want%20to%20book%20a%20doorstep%20wash"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-5 py-3 sm:py-3.5 rounded-lg text-[11px] min-[360px]:text-xs sm:text-sm font-display font-bold uppercase tracking-wider text-emerald-300 hover:text-white bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/30 transition-all text-center"
@@ -184,6 +242,154 @@ export const Home = () => {
             <BeforeAfterSlider />
           </div>
 
+        </div>
+      </section>
+
+      {/* OUR EXTRA SERVICES SECTION */}
+      <section className="py-10 sm:py-20 px-3 sm:px-6 lg:px-4 xl:px-8 2xl:px-12 bg-[#0F172A] border-b border-slate-800 relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,_rgba(139,24,43,0.12)_0%,_transparent_70%)] pointer-events-none" />
+
+        <div className="w-full max-w-[1600px] mx-auto relative z-10">
+          {/* Section Header */}
+          <div className="px-0 mb-6 sm:mb-10 flex flex-col md:flex-row md:items-end justify-between gap-3">
+            <div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8B182B]/15 border border-[#8B182B]/30 text-[#F87171] text-[11px] font-mono font-bold uppercase tracking-wider shadow-sm mb-2">
+                <Sparkles className="w-3 h-3 text-[#F87171]" /> Beyond Car Wash
+              </span>
+              <h2 className="font-display font-black text-2xl sm:text-4xl italic text-white uppercase tracking-wider">
+                OUR EXTRA SERVICES
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mt-1.5">
+                From home repairs to professional advisory — we bring trusted help right to your doorstep.
+              </p>
+            </div>
+            <a
+              href="https://wa.me/918750919105?text=Hello%20CarOnBar,%20I%20want%20to%20know%20about%20your%20extra%20services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:flex font-display font-extrabold italic text-xs text-[#F87171] hover:text-rose-300 items-center gap-1 uppercase tracking-wider shrink-0 transition-colors"
+            >
+              ENQUIRE NOW <ChevronRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* ── MOBILE: horizontal snap scroll (< 640px) ── */}
+          <div className="flex sm:hidden gap-4 px-2 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-5">
+            {EXTRA_SERVICES.map((svc, idx) => (
+              <div key={idx} className="snap-center shrink-0 w-[85vw] max-w-[340px] bg-white/[0.06] border border-white/10 rounded-2xl p-5 flex flex-col gap-3.5 transition-all duration-300">
+                <div className="flex items-start gap-3">
+                  <div className={`w-11 h-11 rounded-xl ${svc.iconBg} flex items-center justify-center text-2xl shrink-0`}>
+                    {svc.emoji}
+                  </div>
+                  <div className="min-w-0 flex-1 pt-0.5">
+                    <h3 className={`font-display font-black text-sm ${svc.titleColor} uppercase tracking-wide leading-snug`}>
+                      {svc.title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="h-px bg-white/10" />
+                <ul className="flex flex-col gap-1.5 flex-1">
+                  {svc.tags.map((tag, i) => (
+                    <li key={i} className={`flex items-center gap-2.5 px-3 py-2 rounded-lg bg-white/[0.04] ${svc.rowBg} transition-colors`}>
+                      <span className={`w-2 h-2 rounded-full ${svc.dot} shrink-0`} />
+                      <span className={`text-sm font-medium ${svc.rowText} leading-snug`}>{tag}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile scroll indicator dots */}
+          <div className="flex sm:hidden justify-center gap-1.5 mt-2">
+            {[0, 1, 2, 3, 4].map(i => (
+              <div key={i} className={`h-1 rounded-full ${i === 0 ? 'w-5 bg-[#8B182B]' : 'w-1.5 bg-slate-700'}`} />
+            ))}
+          </div>
+
+          {/* ── TABLET (640px - 1023px): 2-col on sm, 3-col on md ── */}
+          <div className="hidden sm:grid lg:hidden grid-cols-2 md:grid-cols-3 gap-4">
+            {EXTRA_SERVICES.map((svc, idx) => (
+              <div
+                key={idx}
+                className={`group bg-white/[0.06] hover:bg-white/[0.09] border border-white/10 hover:border-[#8B182B]/40 rounded-2xl p-4.5 sm:p-5 flex flex-col gap-3.5 transition-all duration-300 cursor-default hover:-translate-y-1.5 hover:shadow-xl ${svc.glow}`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-11 h-11 rounded-xl ${svc.iconBg} flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                    {svc.emoji}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className={`font-display font-black text-sm md:text-[15px] ${svc.titleColor} uppercase tracking-wide leading-snug group-hover:brightness-125 transition-all`}>
+                      {svc.title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="h-px bg-white/10" />
+                <ul className="flex flex-col gap-1.5 flex-1">
+                  {svc.tags.map((tag, i) => (
+                    <li
+                      key={i}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg bg-white/[0.04] ${svc.rowBg} transition-colors cursor-default`}
+                    >
+                      <span className={`w-2 h-2 rounded-full ${svc.dot} shrink-0`} />
+                      <span className={`text-sm font-medium ${svc.rowText} leading-snug`}>
+                        {tag}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* ── WIDE SCREEN (>= 1024px): EXACTLY 1 ROW OF 5 CARDS with proportional scaling ── */}
+          <div className="hidden lg:grid grid-cols-5 gap-2.5 xl:gap-3.5 2xl:gap-5">
+            {EXTRA_SERVICES.map((svc, idx) => (
+              <div
+                key={idx}
+                className={`group bg-white/[0.06] hover:bg-white/[0.09] border border-white/10 hover:border-[#8B182B]/40 rounded-xl xl:rounded-2xl p-3.5 xl:p-4 2xl:p-5 flex flex-col gap-3 xl:gap-3.5 2xl:gap-4 transition-all duration-300 cursor-default hover:-translate-y-1.5 hover:shadow-xl ${svc.glow}`}
+              >
+                <div className="flex items-center gap-2 xl:gap-2.5 2xl:gap-3">
+                  <div className={`w-8 h-8 xl:w-9 xl:h-9 2xl:w-11 2xl:h-11 rounded-lg xl:rounded-xl ${svc.iconBg} flex items-center justify-center text-lg xl:text-xl 2xl:text-2xl shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                    {svc.emoji}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className={`font-display font-black text-[11px] xl:text-[12.5px] 2xl:text-sm ${svc.titleColor} uppercase tracking-wide leading-tight group-hover:brightness-125 transition-all`}>
+                      {svc.title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="h-px bg-white/10" />
+                <ul className="flex flex-col gap-1 xl:gap-1.5 flex-1">
+                  {svc.tags.map((tag, i) => (
+                    <li
+                      key={i}
+                      className={`flex items-center gap-1.5 xl:gap-2 px-2 py-1.5 xl:px-2.5 xl:py-1.5 2xl:px-3 2xl:py-2 rounded-md xl:rounded-lg bg-white/[0.04] ${svc.rowBg} transition-colors cursor-default`}
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full ${svc.dot} shrink-0`} />
+                      <span className={`text-[11px] xl:text-[12px] 2xl:text-[13px] font-medium ${svc.rowText} leading-snug truncate`} title={tag}>
+                        {tag}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom CTA row */}
+          <div className="flex items-center justify-center mt-8 sm:mt-10 px-4 sm:px-0">
+            <a
+              href="https://wa.me/918750919105?text=Hello%20CarOnBar,%20I%20want%20to%20know%20about%20your%20extra%20services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-display font-black italic uppercase tracking-wider bg-[#8B182B] text-white hover:bg-[#A61C33] shadow-[0_4px_20px_rgba(139,24,43,0.4)] hover:shadow-[0_6px_28px_rgba(139,24,43,0.6)] transition-all hover:-translate-y-0.5"
+            >
+              <span>ENQUIRE ON WHATSAPP</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </section>
 
