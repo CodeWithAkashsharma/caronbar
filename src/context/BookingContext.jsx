@@ -2,14 +2,14 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { VEHICLE_TYPES } from '../data/vehicleTypes';
 import { SERVICES_DATA } from '../data/servicesData';
 import { PACKAGES_DATA, ADDONS_DATA } from '../data/packagesData';
-import { 
-  createBooking as createFirebaseBooking, 
-  subscribeBookings, 
-  updateBooking as updateFirebaseBooking, 
-  deleteBooking as deleteFirebaseBooking, 
-  createQueryInquiry as createFirebaseQuery, 
-  subscribeQueries, 
-  updateQueryStatus as updateFirebaseQueryStatus, 
+import {
+  createBooking as createFirebaseBooking,
+  subscribeBookings,
+  updateBooking as updateFirebaseBooking,
+  deleteBooking as deleteFirebaseBooking,
+  createQueryInquiry as createFirebaseQuery,
+  subscribeQueries,
+  updateQueryStatus as updateFirebaseQueryStatus,
   deleteQueryInquiry as deleteFirebaseQuery,
   seedSampleDataToFirebase
 } from '../services/firebaseService';
@@ -91,7 +91,7 @@ export const BookingProvider = ({ children }) => {
         const parsed = JSON.parse(saved);
         if (parsed.vehicleTypeId) return parsed.vehicleTypeId;
       }
-    } catch (e) {}
+    } catch (e) { }
     return 'hatchback';
   });
 
@@ -109,7 +109,7 @@ export const BookingProvider = ({ children }) => {
   const resetDraftBooking = () => {
     try {
       sessionStorage.removeItem('caronbar_draft_booking');
-    } catch (e) {}
+    } catch (e) { }
     setDraftBooking(DEFAULT_DRAFT_BOOKING);
   };
 
@@ -140,13 +140,13 @@ export const BookingProvider = ({ children }) => {
 
     const vehId = customDraft.vehicleTypeId || selectedVehicleId || 'hatchback';
     const vehicle = VEHICLE_TYPES.find(v => v.id === vehId) || VEHICLE_TYPES[0];
-    
+
     let basePrice = 0;
     let baseVehiclePrice = 0;
     const item = customDraft.itemType === 'package'
       ? PACKAGES_DATA.find(p => p.id === customDraft.selectedItemId)
       : SERVICES_DATA.find(s => s.id === customDraft.selectedItemId || s.slug === customDraft.selectedItemId);
-    
+
     if (item) {
       basePrice = item.basePrice || 0;
       if (item.prices) {
@@ -283,7 +283,7 @@ export const BookingProvider = ({ children }) => {
   const updateBookingStatus = async (bookingId, newStatus, detailerName, extraFields = {}) => {
     const booking = bookings.find(b => b.id === bookingId || b.docId === bookingId);
     const docId = booking?.docId || bookingId;
-    
+
     await updateFirebaseBooking(docId, {
       status: newStatus,
       detailerName: detailerName || booking?.detailerName || 'Assigned Detailer',

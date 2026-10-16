@@ -44,7 +44,7 @@ export const Dashboard = () => {
 
       <div className="pt-28 pb-20 bg-[#F8FAFC] min-h-screen text-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          
+
           {/* Top User Profile Header Card */}
           <div className="p-8 rounded-3xl bg-white border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
             <div className="flex items-center gap-4 text-center md:text-left">
@@ -93,11 +93,10 @@ export const Dashboard = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
-                  activeTab === tab.id
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${activeTab === tab.id
                     ? 'burgundy-btn shadow-md'
                     : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>

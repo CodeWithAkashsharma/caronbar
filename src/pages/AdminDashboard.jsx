@@ -43,22 +43,22 @@ export const AdminDashboard = () => {
     if (!b) return false;
     if (b.itemType === 'package') return true;
     const name = (b.serviceName || '').toLowerCase();
-    return name.includes('package') || 
-           name.includes('pass') || 
-           name.includes('quarterly') || 
-           name.includes('half-yearly') || 
-           name.includes('half yearly') || 
-           name.includes('yearly') || 
-           name.includes('annual') || 
-           name.includes('subscription') ||
-           name.includes('months care');
+    return name.includes('package') ||
+      name.includes('pass') ||
+      name.includes('quarterly') ||
+      name.includes('half-yearly') ||
+      name.includes('half yearly') ||
+      name.includes('yearly') ||
+      name.includes('annual') ||
+      name.includes('subscription') ||
+      name.includes('months care');
   };
 
   // Helper to compute package dates
   const getPackageDetails = (b) => {
     const isPkg = isPackageBooking(b);
     const startDate = b.packageStartDate || b.date || new Date().toISOString().split('T')[0];
-    
+
     let expiryDate = b.packageExpiryDate;
     if (!expiryDate) {
       const name = (b.serviceName || '').toLowerCase();
@@ -267,11 +267,10 @@ export const AdminDashboard = () => {
           <div className="flex items-center gap-2 border-b border-white/10 pb-3">
             <button
               onClick={() => setActiveTab('bookings')}
-              className={`flex-1 sm:flex-initial px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
-                activeTab === 'bookings'
+              className={`flex-1 sm:flex-initial px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${activeTab === 'bookings'
                   ? 'bg-[#8B182B] text-white shadow-md'
                   : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
-              }`}
+                }`}
             >
               <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Bookings ({bookings.length})</span>
@@ -279,11 +278,10 @@ export const AdminDashboard = () => {
 
             <button
               onClick={() => setActiveTab('queries')}
-              className={`flex-1 sm:flex-initial px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
-                activeTab === 'queries'
+              className={`flex-1 sm:flex-initial px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${activeTab === 'queries'
                   ? 'bg-[#8B182B] text-white shadow-md'
                   : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
-              }`}
+                }`}
             >
               <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Queries ({queries.length})</span>
@@ -330,13 +328,13 @@ export const AdminDashboard = () => {
 
               {/* SEARCH & FILTER BAR (EXACTLY 4 TABS: 2x2 GRID ON SMALL SCREENS >= 300px) */}
               <div className="p-2.5 sm:p-4 rounded-2xl bg-[#15171e] border border-white/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-                
+
                 {/* 4 Clean Filter Buttons: 2x2 Grid on Mobile, Flex on Desktop */}
                 <div className="grid grid-cols-2 min-[440px]:grid-cols-4 sm:flex sm:flex-wrap items-center gap-1.5 sm:gap-2 w-full md:w-auto">
                   <span className="hidden lg:inline-block text-xs font-mono text-gray-400 mr-1 font-bold uppercase">
                     Filter:
                   </span>
-                  
+
                   {[
                     { id: 'all', label: `All (${bookings.length})` },
                     { id: 'open', label: `Open (${openBookingsCount})` },
@@ -346,11 +344,10 @@ export const AdminDashboard = () => {
                     <button
                       key={tab.id}
                       onClick={() => setBookingFilter(tab.id)}
-                      className={`px-2 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer text-center justify-center ${
-                        bookingFilter === tab.id
+                      className={`px-2 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer text-center justify-center ${bookingFilter === tab.id
                           ? 'bg-[#8B182B] text-white shadow-sm ring-1 ring-white/20'
                           : 'bg-[#1c1f26] text-gray-300 hover:text-white border border-white/5 hover:bg-[#252830]'
-                      }`}
+                        }`}
                     >
                       {tab.label}
                     </button>
@@ -452,11 +449,10 @@ export const AdminDashboard = () => {
                                 {formatCurrency(b.totalAmount)}
                               </p>
                               <div className="flex items-center justify-end gap-1 mt-1">
-                                <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-mono font-bold uppercase border ${
-                                  (b.paymentStatus || '').toLowerCase() === 'paid'
+                                <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-mono font-bold uppercase border ${(b.paymentStatus || '').toLowerCase() === 'paid'
                                     ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
                                     : 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                                }`}>
+                                  }`}>
                                   {(b.paymentStatus || '').toLowerCase() === 'paid' ? '✓ Paid' : '⏳ COD'}
                                 </span>
                               </div>
@@ -606,11 +602,10 @@ export const AdminDashboard = () => {
                     <button
                       key={filter.id}
                       onClick={() => setQueryFilter(filter.id)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                        queryFilter === filter.id
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${queryFilter === filter.id
                           ? 'bg-[#8B182B] text-white shadow-sm'
                           : 'bg-[#1c1f26] text-gray-400 hover:text-white border border-white/5'
-                      }`}
+                        }`}
                     >
                       {filter.label}
                     </button>
@@ -744,22 +739,20 @@ export const AdminDashboard = () => {
                 <button
                   type="button"
                   onClick={() => handleBookingFormChange({ itemType: 'service' })}
-                  className={`py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 ${
-                    newBookingData.itemType === 'service'
+                  className={`py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 ${newBookingData.itemType === 'service'
                       ? 'bg-[#8B182B] text-white shadow-sm'
                       : 'text-gray-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Sparkles className="w-3.5 h-3.5" /> Daily Service
                 </button>
                 <button
                   type="button"
                   onClick={() => handleBookingFormChange({ itemType: 'package' })}
-                  className={`py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 ${
-                    newBookingData.itemType === 'package'
+                  className={`py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 ${newBookingData.itemType === 'package'
                       ? 'bg-purple-600 text-white shadow-sm'
                       : 'text-gray-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Package className="w-3.5 h-3.5" /> Monthly Package
                 </button>
@@ -813,11 +806,10 @@ export const AdminDashboard = () => {
                         key={v.id}
                         type="button"
                         onClick={() => handleBookingFormChange({ vehicleTypeId: v.id })}
-                        className={`p-2 rounded-xl border text-center font-bold text-xs transition-all ${
-                          newBookingData.vehicleTypeId === v.id
+                        className={`p-2 rounded-xl border text-center font-bold text-xs transition-all ${newBookingData.vehicleTypeId === v.id
                             ? 'bg-[#8B182B]/20 border-[#8B182B] text-white'
                             : 'bg-[#101116] border-white/10 text-gray-400 hover:text-white'
-                        }`}
+                          }`}
                       >
                         {v.name} ({v.multiplier}x)
                       </button>
@@ -1010,11 +1002,10 @@ export const AdminDashboard = () => {
                     <p className="text-gray-400 font-bold uppercase text-[10px] flex items-center gap-1">
                       <CreditCard className="w-3.5 h-3.5 text-[#8B182B]" /> Payment & Gateway Details
                     </p>
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border ${
-                      (viewingBooking.paymentStatus || '').toLowerCase() === 'paid'
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border ${(viewingBooking.paymentStatus || '').toLowerCase() === 'paid'
                         ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
                         : 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                    }`}>
+                      }`}>
                       {(viewingBooking.paymentStatus || '').toLowerCase() === 'paid' ? '✓ Paid Online' : '⏳ Pay on Service (COD)'}
                     </span>
                   </div>

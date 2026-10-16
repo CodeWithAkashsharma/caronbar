@@ -1,19 +1,19 @@
-import { 
-  collection, 
-  addDoc, 
-  getDocs, 
-  doc, 
-  updateDoc, 
-  deleteDoc, 
-  query, 
-  where, 
-  onSnapshot, 
-  serverTimestamp 
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  onSnapshot,
+  serverTimestamp
 } from 'firebase/firestore';
-import { 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged 
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from 'firebase/auth';
 import { db, auth } from '../config/firebase';
 
@@ -137,7 +137,7 @@ export const subscribeBookings = (onSuccess, onError) => {
     });
   } catch (err) {
     onSuccess(getLocalBookings());
-    return () => {};
+    return () => { };
   }
 };
 
@@ -245,7 +245,7 @@ export const subscribeQueries = (onSuccess, onError) => {
     });
   } catch (err) {
     onSuccess(getLocalQueries());
-    return () => {};
+    return () => { };
   }
 };
 
